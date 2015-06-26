@@ -46,7 +46,10 @@ we can perform calculations with promises **at whatever time in the future they 
 ```javascript
 
 var greetingPromise = server.getGreeting();
-var namePromise = userManager.getUserFromApi({ user_id: 1 }).then(function(user) { return user.name; });
+var namePromise = userManager.getUserFromApi({
+  user_id: 1 }).then(function(user) {
+    return user.name;
+  });
 
 var messagePromise = greetingPromise.then(function(greeting) {
   return namePromise.then(function(name) {
