@@ -242,7 +242,7 @@ geologistsPromise.then(function(geologists) {
 });
 ```
 
-<!-- @task, "hasDeliverable" true, "text" : "Paste in the code for a firstGeologistPromise" -->
+<!-- @task, "hasDeliverable" : true, "text" : "Paste in the code for a firstGeologistPromise" -->
 
 Our server also has a function that returns a promise for the array of readings taken by any given geologist:
 
