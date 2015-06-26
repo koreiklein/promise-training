@@ -1,0 +1,17 @@
+{
+
+  "olpVersion" : "0.1",
+
+  "paths" : [
+  ],
+
+
+  "modules" : [
+    {
+      "olm" : "./modules/asynchronous-programming-with-promises.olm"
+    }
+  ],
+
+  "assets" : [
+  ]
+}

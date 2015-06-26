@@ -1,0 +1,320 @@
+
+
+<!-- @section -->
+
+# A Quick Introduction to Promises
+
+Promises are a programing construct that you can use to structure
+your asynchronous code.  Here's a quick overview of how they work...
+
+Just as we can use ordinary data types like
+
+- a string: `var s = 'hello' + ' ' + 'world!';`
+- an integer `var i = 40 + 2;`
+- a user model: `var currentUser = userManager.getUserLocally({ user_id: 1});`
+
+to model that is **currently sitting in memory**, we can use Promise data types like
+
+- a promise for a string: `var sPromise = server.getMessage();`
+- a promise for an integer: `var iPromise = server.getCurrentTime();`
+- a promise for a user model: `var currentUser = userManager.getUserFromApi({ user_id: 1});`
+
+to model data that **will arrive in memory at some point in the future**
+
+and just as we can perform calculations **in memory**:
+
+```javascript
+var greeting = 'hello';
+var name = userManager.getUserLocally({ user_id: 1 }).name;
+
+var message = greeting + ' ' + name;
+
+console.log(message);
+```
+
+we can perform calculations with promises **at whatever time in the future they arrive**
+
+```javascript
+
+var greetingPromise = server.getGreeting();
+var namePromise = userManager.getUserFromApi({ user_id: 1 }).then(function(user) { return user.name; });
+
+var messagePromise = greetingPromise.then(function(greeting) {
+  return namePromise.then(function(name) {
+    return greeting + ' ' + name;
+  });
+});
+
+messagePromise.then(function(message) { console.log(message); });
+```
+
+<!-- @task, "text" : "Take a moment to compare the two code snippets above (the in-memory one and the promisy one). How do they compare?", "hasDeliverable" : true -->
+
+But enough talk, let's get you writing some code!
+
+To get you started working with promises, we've prepared a simple example application to work on.
+In it, we have a team of geologists traveling around a volcano, taking samples of rocks and recording
+geological data.
+
+Architecturally, there are two parts to our application
+
+1. There is one central server that collects all the information gathered by the geologists.
+2. Each geologist has his own client application that he uses to communicate with the central server.
+
+<!-- @asset, "contentType" : "outlearn/image", "location" : "images/client-server-diagram.svg" -->
+
+For this tutorial, you'll be working on the client application.
+
+We've prepared a virtual machine you should use to follow along.
+Make sure to have the `vagrant` command installed on your machine.  Then run
+
+```bash
+$ git clone __________ # Get the this repository of examples.
+$ cd geology-client
+$ vagrant up # Start up a virtual machine.  This may take a few minutes.
+$ vagrant ssh # Open up a terminal inside the virtual machine.
+$ ./test.sh
+```
+
+<!-- @task, "text" : "Start your virtual machine and run the test.sh command." -->
+
+you should see a suite of tests run and fail.
+
+Now, in another terminal,
+
+```bash
+$ cd geology-client
+$ vagrant ssh # Start a new terminal inside the virtual machine.
+
+$ node main.js # Run main.js
+
+```
+
+Now you're ready to start working on problems.
+
+<!-- @section -->
+
+# Using `.then`
+
+You can create one promise from another by calling `.then`
+
+```javascript
+
+var volcanoPromise = server.getVolcano();
+
+console.log(volcanoPromise);
+
+var coordinatesPromise = volcanoPromise.then(function(volcano) {
+  return {
+    latitude: volcano.latitude,
+    longitude: volcano.longitude,
+  };
+});
+
+console.log(coordinatesPromise);
+
+volcanoPromise.then(function(volcano) {
+  console.log("Got a volcano");
+  console.log(volcano);
+});
+
+var x = coordinatesPromise.then(function(coordinates) {
+  console.log("Got the coordinates");
+  console.log(coordinates);
+});
+```
+
+### Explanation:
+
+Line 2 creates the volcano promise we start with.  It doesn't actually get the volcano, just a promise
+that will eventually "resolve" to a volcano.
+
+On line 6 we use `.then` to create a promise for the coordinates of the volcano.  It's a lot like the volcano promise,
+but instead of resolving to a volcano, it resolves to a latitude and a longitude.
+
+`.then` takes as its argument a function that will transform a volcano into its coordinates
+and returns a promise for the coordinates.
+
+<!-- @task, "hasDeliverable" : true, "text" : "Enter the above code in main.js and run it. What is the longitude of the volcano?" -->
+
+<!-- @task, "hasDeliverable" : true, "text": "What does the promise x resolve to? Why?" -->
+
+When as the coordinates promise resolves, the timeline of its execution will look something like this:
+
+<!-- @asset, "contentType" : "outlearn/image", "location" : "images/simple-timeline.svg" -->
+
+The function passed into `volcanoPromise.then` will only run once the server gets back to us and
+the promise has resolved.
+
+# Chaining `.then`
+
+So far, the functions we've been passing to `.then` return ordinary javascript objects.
+If instead we were to return another promise, `.then` would return a promise that waits for
+BOTH promises to resolve.
+
+For example if we write:
+
+```javascript
+var messagePromise = server.getVolcano().then(function(volcano) {
+  return server.getCurrentTime().then(function(currentTime) {
+    return volcano.name + " is looking good at " + currentTime;
+  });
+});
+```
+
+We get a promise with a timeline that will look something like this:
+
+<!-- @asset, "contentType" : "outlearn/image", "location" : "images/chaining-sequential.svg" -->
+
+__**NOTE**: `server.getCurrentTime()` returns a promise for the current time.__
+
+If you look at the timeline for the `messagePromise`, you'll notice that it only requests the current
+time **after** the server has responded with the volcano.  But that's not at all necessary,
+we could instead build a messagePromise that requests the current time **before** the server responds with the volcano and
+prints out our message after **BOTH** the current time promise and the volcano promise have resolved.
+
+If we built the messagePromise that way, it's timeline would look more this like:
+
+<!-- @asset, "contentType" : "outlearn/image", "location" : "images/chaining-parallel.svg" -->
+
+<!-- @task, "hasDeliverable" : true, "text" : "Paste in some code for a messagePromise that will execute with a timeline like the one above." -->
+
+<!-- @section -->
+
+# Using `RSVP.Promise.all`
+
+`RSVP.Promise.all` is a function that will turn an array of promises into a promise for an array.
+
+Here's an example:
+
+```javascript
+var volcanoPromise = server.getVolcano();
+var currentTimePromise = server.getCurrentTime();
+
+var arrayOfPromises = [ volcanoPromise, currentTimePromise ];
+
+var promiseForArray = RSVP.Promise.all(arrayOfPromises);
+
+promiseForArray.then(function(array) {
+  console.log("Array length: " + array.length);
+
+  for (var i = 0; i < array.length; ++i) {
+    console.log("Array element " + i + ":");
+    console.log(array[i]);
+  }
+});
+```
+
+<!-- @multipleChoice -->
+
+Take a guess, when `promiseForArray` executes, which of the following timelines might it have?
+
+- [ ] [](promise-for-array-sequential)
+- [ ] [](promise-for-array-immediate)
+- [X] [](promise-for-array-parallel)
+- [ ] [](promise-for-array-sequential-spaced)
+
+<!-- @end -->
+
+<!-- @section -->
+
+# An elaborate example for putting it all together:
+
+Our server has a function that returns a promise for the array of all our geologists:
+
+```javascript
+var geologistsPromise = server.getGeologists();
+
+geologistsPromise.then(function(geologists) {
+  for (var i = 0; i < geologists.length; ++i) {
+    console.log("Geologist " + i + ":");
+    console.log(geologists[i].name);
+  }
+});
+```
+
+<!-- @task, "hasDeliverable" true, "Paste in the code for a firstGeologistPromise" -->
+
+Our server also has a function that returns a promise for the array of readings taken by any given geologist:
+
+```javascript
+var readingsPromise = server.getReadings(geologist);
+```
+
+Try to create a promise that resolves to whatever geologist has taken readings that are closest to the volcano.
+
+```javascript
+var closestGeologistPromise = ..... Your code here ....
+
+closestGeologistPromise.then(function(closestGeologist) {
+  console.log(closestGeologist.name + " has taken the closest reading to the volcano.");
+});
+```
+
+<!-- @task, "hasDeliverable" : true, "Paste the code here once you get it right." -->
+
+<!-- @section -->
+
+# Using `RSVP.hash`
+
+Just as `RSVP.Promise.all` turns an array of promises into a promise for an array,
+`RSVP.hash` turns a hash (a javascript object) of promises into a promise for a hash.
+
+
+Remember the messagePromise from above? It looked like this:
+
+```javascript
+var messagePromise = server.getVolcano().then(function(volcano) {
+  return server.getCurrentTime().then(function(currentTime) {
+    return volcano.name + " is looking good at " + currentTime;
+  });
+});
+```
+
+This messagePromise is inefficient in that it requests the current time **in sequence** after requesting the volcano.
+
+We rewrote it to get the currentTime and the volcano **in parallel** and compute the message
+once both promises had resolved.
+
+<!-- @task, "hasDeliverable" : true, "Rewrite the messagePromise using RSVP.hash to make its requests in parallel." -->
+
+<!-- @section -->
+
+# Last things first: Creating promises from scratch
+
+<!-- @multipleChoice -->
+
+Which of the following things has been conspicuously absent from this module on promises?
+
+- [ ] How to build new promises from old ones.
+- [ ] How to create a new promise out of many existing promises.
+- [ ] How to to control the order in which resources are requested from the server.
+- [X] How you would create a promise in the first place.
+
+<!-- @end -->
+
+In many cases, you really don't need to be creating your own promises from scratch. Instead, you'll be working with
+some library that returns the basic promises, and all you need to do is build new promises from old ones, just like
+we've been doing in this tutorial.
+
+For the sake of completeness, we'll give a quick example here of how you might create a promise in the first place.
+
+<!-- @link, "url" : "http://jquery.com/", "text" : "This example uses jquery.  If you don't know jquery already, it's a library for manipulating DOM and making ajax requests from a web browser. Take a quick look." -->
+
+```javascript
+
+var server = {
+
+  getGeologists: function() {
+    return new RSVP.Promise(function(resolve) {
+      $.ajax("/geologists")
+        .done(function(data) {
+          resolve(data);
+        });
+    });
+  },
+
+};
+
+var geologistsPromise = server.getGeologists();
+```
