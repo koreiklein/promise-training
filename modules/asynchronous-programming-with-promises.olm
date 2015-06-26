@@ -1,4 +1,13 @@
-
+<!--
+{
+  "name" : "asynchronous-programming-with-promises",
+  "freshnessDate" : 2015-06-25,
+  "version" : "0.1",
+  "title" : "Asynchronous Programming with Promises",
+  "description" : "A basic introduction to how to write asynchronous code using the RSVP promise library.",
+  "license" : "CC Attribution-ShareAlike 4.0"
+}
+-->
 
 <!-- @section -->
 
