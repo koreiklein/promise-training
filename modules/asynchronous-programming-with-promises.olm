@@ -329,3 +329,9 @@ var server = {
 
 var geologistsPromise = server.getGeologists();
 ```
+
+<!-- @section -->
+
+# Error Handling
+
+TODO(KK): Write this section.
