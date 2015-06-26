@@ -70,7 +70,7 @@ Architecturally, there are two parts to our application
 1. There is one central server that collects all the information gathered by the geologists.
 2. Each geologist has his own client application that he uses to communicate with the central server.
 
-<!-- @asset, "contentType" : "outlearn/image", "location" : "images/client-server-diagram.svg" -->
+@asset, "contentType" : "outlearn/image", "location" : "images/client-server-diagram.svg" -->
 
 For this tutorial, you'll be working on the client application.
 
@@ -150,7 +150,7 @@ and returns a promise for the coordinates.
 
 When as the coordinates promise resolves, the timeline of its execution will look something like this:
 
-<!-- @asset, "contentType" : "outlearn/image", "location" : "images/simple-timeline.svg" -->
+@asset, "contentType" : "outlearn/image", "location" : "images/simple-timeline.svg" -->
 
 The function passed into `volcanoPromise.then` will only run once the server gets back to us and
 the promise has resolved.
@@ -173,7 +173,7 @@ var messagePromise = server.getVolcano().then(function(volcano) {
 
 We get a promise with a timeline that will look something like this:
 
-<!-- @asset, "contentType" : "outlearn/image", "location" : "images/chaining-sequential.svg" -->
+@asset, "contentType" : "outlearn/image", "location" : "images/chaining-sequential.svg" -->
 
 __**NOTE**: `server.getCurrentTime()` returns a promise for the current time.__
 
@@ -184,7 +184,7 @@ prints out our message after **BOTH** the current time promise and the volcano p
 
 If we built the messagePromise that way, it's timeline would look more this like:
 
-<!-- @asset, "contentType" : "outlearn/image", "location" : "images/chaining-parallel.svg" -->
+@asset, "contentType" : "outlearn/image", "location" : "images/chaining-parallel.svg" -->
 
 <!-- @task, "hasDeliverable" : true, "text" : "Paste in some code for a messagePromise that will execute with a timeline like the one above." -->
 
