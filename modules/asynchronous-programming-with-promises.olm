@@ -242,7 +242,7 @@ geologistsPromise.then(function(geologists) {
 });
 ```
 
-<!-- @task, "hasDeliverable" true, "Paste in the code for a firstGeologistPromise" -->
+<!-- @task, "hasDeliverable" true, "text" : "Paste in the code for a firstGeologistPromise" -->
 
 Our server also has a function that returns a promise for the array of readings taken by any given geologist:
 
@@ -260,7 +260,7 @@ closestGeologistPromise.then(function(closestGeologist) {
 });
 ```
 
-<!-- @task, "hasDeliverable" : true, "Paste the code here once you get it right." -->
+<!-- @task, "hasDeliverable" : true, "text" : "Paste the code here once you get it right." -->
 
 <!-- @section -->
 
@@ -285,7 +285,7 @@ This messagePromise is inefficient in that it requests the current time **in seq
 We rewrote it to get the currentTime and the volcano **in parallel** and compute the message
 once both promises had resolved.
 
-<!-- @task, "hasDeliverable" : true, "Rewrite the messagePromise using RSVP.hash to make its requests in parallel." -->
+<!-- @task, "hasDeliverable" : true, "text" : "Rewrite the messagePromise using RSVP.hash to make its requests in parallel." -->
 
 <!-- @section -->
 
