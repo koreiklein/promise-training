@@ -16,19 +16,18 @@
 Promises are a programing construct that you can use to structure
 your asynchronous code.  Here's a quick overview of how they work...
 
-Just as we can use ordinary data types like
+Just as we can model data **in memory** with ordinary data types like
 
 - a string: `var s = 'hello' + ' ' + 'world!';`
 - an integer `var i = 40 + 2;`
 - a user model: `var currentUser = userManager.getUserLocally({ user_id: 1});`
 
-to model that is **currently sitting in memory**, we can use Promise data types like
+, we can model that **will arrive in memory at some point in the future** with Promise data types like
 
 - a promise for a string: `var sPromise = server.getMessage();`
 - a promise for an integer: `var iPromise = server.getCurrentTime();`
 - a promise for a user model: `var currentUser = userManager.getUserFromApi({ user_id: 1});`
 
-to model data that **will arrive in memory at some point in the future**
 
 and just as we can perform calculations **in memory**:
 
