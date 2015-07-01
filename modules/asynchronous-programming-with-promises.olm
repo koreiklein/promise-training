@@ -109,6 +109,7 @@ Now you're ready to start working on problems.
 
 You can create one promise from another by calling `.then`
 
+<!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
 
 var volcanoPromise = server.getVolcano();
@@ -134,6 +135,7 @@ var x = coordinatesPromise.then(function(coordinates) {
   console.log(coordinates);
 });
 ```
+<!-- @end -->
 
 ### Explanation:
 
@@ -188,7 +190,13 @@ If we built the messagePromise that way, it's timeline would look more this like
 
 @asset, "contentType" : "outlearn/image", "location" : "images/chaining-parallel.svg" -->
 
-<!-- @task, "hasDeliverable" : true, "text" : "Paste in some code for a messagePromise that will execute with a timeline like the one above." -->
+<!-- @code, "base" : "mock-volcano-server", "prompt" : "Write a messagePromise that will execute with a timeline like the one above." -->
+```javascript
+
+var messagePromise = ....;
+
+```
+<!-- @end -->
 
 <!-- @section -->
 
@@ -198,6 +206,7 @@ If we built the messagePromise that way, it's timeline would look more this like
 
 Here's an example:
 
+<!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
 var volcanoPromise = server.getVolcano();
 var currentTimePromise = server.getCurrentTime();
@@ -215,6 +224,7 @@ promiseForArray.then(function(array) {
   }
 });
 ```
+<!-- @end -->
 
 <!-- @multipleChoice -->
 
@@ -233,6 +243,7 @@ Take a guess, when `promiseForArray` executes, which of the following timelines 
 
 Our server has a function that returns a promise for the array of all our geologists:
 
+<!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
 var geologistsPromise = server.getGeologists();
 
@@ -243,8 +254,17 @@ geologistsPromise.then(function(geologists) {
   }
 });
 ```
+<!-- @end -->
 
-<!-- @task, "hasDeliverable" : true, "text" : "Paste in the code for a firstGeologistPromise" -->
+<!-- @code, "base" : "mock-volcano-server", "prompt" : "Create a promise for the first geologist in the list." -->
+```javascript
+var firstGeologistPromise =  ....;
+
+firstGeologistPromise.then(function(geologist) {
+  console.log("The first geologist is " + geologist.name);
+});
+```
+<!-- @end -->
 
 Our server also has a function that returns a promise for the array of readings taken by any given geologist:
 
@@ -252,8 +272,8 @@ Our server also has a function that returns a promise for the array of readings 
 var readingsPromise = server.getReadings(geologist);
 ```
 
-Try to create a promise that resolves to whatever geologist has taken readings that are closest to the volcano.
 
+<!-- @code, "base" : "mock-volcano-server", "prompt" : "Create a promise that resolves to whatever geologist has taken readings that are closest to the volcano." -->
 ```javascript
 var closestGeologistPromise = ..... Your code here ....
 
@@ -261,8 +281,7 @@ closestGeologistPromise.then(function(closestGeologist) {
   console.log(closestGeologist.name + " has taken the closest reading to the volcano.");
 });
 ```
-
-<!-- @task, "hasDeliverable" : true, "text" : "Paste the code here once you get it right." -->
+<!-- @end -->
 
 <!-- @section -->
 
@@ -287,7 +306,11 @@ This messagePromise is inefficient in that it requests the current time **in seq
 We rewrote it to get the currentTime and the volcano **in parallel** and compute the message
 once both promises had resolved.
 
-<!-- @task, "hasDeliverable" : true, "text" : "Rewrite the messagePromise using RSVP.hash to make its requests in parallel." -->
+<!-- @code, "base" : "mock-volcano-server", "prompt" :"Rewrite the messagePromise using RSVP.hash to make its requests in parallel." -->
+```javascript
+var messagePromise = ....;
+```
+<!-- @end -->
 
 <!-- @section -->
 
@@ -312,6 +335,7 @@ For the sake of completeness, we'll give a quick example here of how you might c
 
 <!-- @link, "url" : "http://jquery.com/", "text" : "This example uses jquery.  If you don't know jquery already, it's a library for manipulating DOM and making ajax requests from a web browser. Take a quick look." -->
 
+<!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
 
 var server = {
@@ -329,6 +353,7 @@ var server = {
 
 var geologistsPromise = server.getGeologists();
 ```
+<!-- @end -->
 
 <!-- @section -->
 

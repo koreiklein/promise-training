@@ -13,5 +13,13 @@
   ],
 
   "assets" : [
+    {
+      "name" : "mock-volcano-server",
+      "location" : "code/mock-volcano-server.js",
+
+      "contentType" : "outlearn/code-environment",
+      "language" : "javascript",
+      "dockerfile" : "code/Dockerfile",
+    }
   ]
 }
