@@ -208,7 +208,7 @@ var messagePromise = server.getVolcano().then(function(volcano) {
 
 we get a promise with a timeline that will look something like this:
 
-@asset, "contentType" : "outlearn/image", "location" : "images/chaining-sequential.svg" -->
+![](https://s3.amazonaws.com/outlearn-public/OWASP-Module-1/promises-images/simple-timeline.svg)
 
 <!-- @multipleChoice -->
 
