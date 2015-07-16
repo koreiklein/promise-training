@@ -177,7 +177,7 @@ var messagePromise = server.getVolcano().then(function(volcano) {
 });
 ```
 
-  **NOTE**: `server.getCurrentTime()` returns a promise for the current time.
+    **NOTE**: `server.getCurrentTime()` returns a promise for the current time.
 
 We get a promise with a timeline that will look something like this:
 
