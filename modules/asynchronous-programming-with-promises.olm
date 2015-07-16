@@ -154,9 +154,29 @@ and returns a promise for the coordinates.
 
 <!-- @task, "hasDeliverable" : true, "text": "What does the promise x resolve to? Why?" -->
 
-When as the coordinates promise resolves, the timeline of its execution will look something like this:
+## Timelines
+
+Lets say we have a `coordinatesPromise` created like so
+
+<!-- @code, "base" : "mock-volcano-server" -->
+```javascript
+
+var volcanoPromise = server.getVolcano();
+
+var coordinatesPromise = volcanoPromise.then(function(volcano) {
+  return {
+    latitude: volcano.latitude,
+    longitude: volcano.longitude,
+  };
+});
+```
+
+A nice way to visually depict the runtime execution of the above promisy code is to
+use a timeline:
 
 @asset, "contentType" : "outlearn/image", "location" : "images/simple-timeline.svg" -->
+
+# TODO(KK): Explain how to read this timeline.
 
 The function passed into `volcanoPromise.then` will only run once the server gets back to us and
 the promise has resolved.
@@ -165,7 +185,7 @@ the promise has resolved.
 
 So far, the functions we've been passing to `.then` return ordinary javascript objects.
 If instead, we call `.then` with a function that returns another promise, the promise returned
-by `.then` will wait for both of its component promises to resolve.
+by `.then` will resolve the the data from the latter promise.
 
 For example if we write:
 
