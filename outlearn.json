@@ -7,7 +7,7 @@
       "name" : "comprehensive-promises",
       "title" : "A Comprehensive introduction to Promises",
       "pages" : [
-        { "olm" : "asynchronous-programming-with-promises" },
+        { "module" : "asynchronous-programming-with-promises" },
         { "page" : "tmp/task-js-and-es6.md" },
         { "page" : "tmp/computed-properties.md" },
         { "page" : "tmp/promises-within-computed-properties.md" },
