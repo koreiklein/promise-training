@@ -16,13 +16,15 @@
 Promises are a programing construct that you can use to structure
 your asynchronous code.  Here's a quick overview of how they work...
 
-Just as we can model data **in memory** with ordinary data types like
+We can model data **in memory** with ordinary data types like so
 
 - a string: `var s = 'hello' + ' ' + 'world!';`
 - an integer `var i = 40 + 2;`
 - a user model: `var currentUser = userManager.getUserLocally({ user_id: 1});`
 
-, we can model that **will arrive in memory at some point in the future** with Promise data types like
+If for some reason the data we want can't be calculated immediately (for example,
+it must be requested over the network from an API), then we can model
+data that **will arrive in memory at some point in the future** with Promise data types like so
 
 - a promise for a string: `var sPromise = server.getMessage();`
 - a promise for an integer: `var iPromise = server.getCurrentTime();`
@@ -190,13 +192,72 @@ If we built the messagePromise that way, it's timeline would look more this like
 
 @asset, "contentType" : "outlearn/image", "location" : "images/chaining-parallel.svg" -->
 
-<!-- @code, "base" : "mock-volcano-server", "prompt" : "Write a messagePromise that will execute with a timeline like the one above." -->
+<!-- @code, "base" : "mock-volcano-server" -->
+
+Write a messagePromise that will execute with a timeline like the one above.
+
 ```javascript
 
 var messagePromise = ....;
 
 ```
 <!-- @end -->
+
+## Promise reuse
+
+No matter how many times you call `.then` on a promise, the promise will only fetch data from the server once.
+
+For example:
+
+<!-- @code, "base" : "mock-volcano-server" -->
+```javascript
+var volcanoPromise = server.getVolcano();
+
+var latitudePromise = volcanoPromise.then(function(volcano) {
+  return volcano.latitude;
+});
+
+var longitudePromise = volcanoPromise.then(function(volcano) {
+  return volcano.longitude;
+});
+
+var coordinatesPromise = latitudePromise.then(function(latitude) {
+  return longitudePromise.then(function(longitude) {
+    return { latitude: latitude, longitude: longitude };
+  });
+});
+
+coordinatesPromise.then(function(coordinates) {
+  console.log(coordinates);
+});
+```
+
+
+<!-- @multipleChoice -->
+
+Which of the following timelines should the above code have ?
+
+- [X] [](Request once)
+- [ ] [](Request twice)
+
+<!-- @end -->
+
+<!-- @section -->
+
+# The Lifetime of a Promise
+
+Over the course of it's lifetime, a promise goes through the following stages:
+
+- *nonexistant*  Before you create the promise in the first place, it doesn't exist.
+- *pending*  Once the promise has been created,
+  it exists in memory, and your code can interact with it (e.g. by calling `.then`),
+  but won't have the data it's waiting for. We call this state the *pending* state.
+- *fulfilled*  After the data for a promise arrives, the promise is *fulfilled*.
+
+This diagram shows the various states the volcano promise moves through when you run
+`var volcanoPromise = server.getVolcano();`
+
+@asset, "contentType" : "outlearn/image", "location" : "images/promise-lifetime.svg" -->
 
 <!-- @section -->
 
@@ -210,8 +271,9 @@ Here's an example:
 ```javascript
 var volcanoPromise = server.getVolcano();
 var currentTimePromise = server.getCurrentTime();
+var geologistsPromise = server.getGeologists();
 
-var arrayOfPromises = [ volcanoPromise, currentTimePromise ];
+var arrayOfPromises = [ volcanoPromise, currentTimePromise, geologistsPromise ];
 
 var promiseForArray = RSVP.Promise.all(arrayOfPromises);
 
@@ -256,7 +318,10 @@ geologistsPromise.then(function(geologists) {
 ```
 <!-- @end -->
 
-<!-- @code, "base" : "mock-volcano-server", "prompt" : "Create a promise for the first geologist in the list." -->
+<!-- @code, "base" : "mock-volcano-server" -->
+
+Create a promise for the first geologist in the list.
+
 ```javascript
 var firstGeologistPromise =  ....;
 
@@ -273,7 +338,10 @@ var readingsPromise = server.getReadings(geologist);
 ```
 
 
-<!-- @code, "base" : "mock-volcano-server", "prompt" : "Create a promise that resolves to whatever geologist has taken readings that are closest to the volcano." -->
+<!-- @code, "base" : "mock-volcano-server" -->
+
+Create a promise that resolves to whatever geologist has taken readings that are closest to the volcano.
+
 ```javascript
 var closestGeologistPromise = ..... Your code here ....
 
@@ -306,7 +374,10 @@ This messagePromise is inefficient in that it requests the current time **in seq
 We rewrote it to get the currentTime and the volcano **in parallel** and compute the message
 once both promises had resolved.
 
-<!-- @code, "base" : "mock-volcano-server", "prompt" :"Rewrite the messagePromise using RSVP.hash to make its requests in parallel." -->
+<!-- @code, "base" : "mock-volcano-server" -->
+
+Rewrite the messagePromise using RSVP.hash to make its requests in parallel.
+
 ```javascript
 var messagePromise = ....;
 ```
@@ -314,7 +385,7 @@ var messagePromise = ....;
 
 <!-- @section -->
 
-# Last things first: Creating promises from scratch
+# First things last: Creating promises from scratch
 
 <!-- @multipleChoice -->
 
@@ -323,7 +394,7 @@ Which of the following things has been conspicuously absent from this module on 
 - [ ] How to build new promises from old ones.
 - [ ] How to create a new promise out of many existing promises.
 - [ ] How to to control the order in which resources are requested from the server.
-- [X] How you would create a promise in the first place.
+- [X] How you would create a starting promise in the first place.
 
 <!-- @end -->
 
@@ -331,9 +402,17 @@ In many cases, you really don't need to be creating your own promises from scrat
 some library that returns the basic promises, and all you need to do is build new promises from old ones, just like
 we've been doing in this tutorial.
 
-For the sake of completeness, we'll give a quick example here of how you might create a promise in the first place.
+For the sake of completeness, however, here is a quick example here of how you might create a promise in the first place.
+
+First, make sure you know some jquery.
 
 <!-- @link, "url" : "http://jquery.com/", "text" : "This example uses jquery.  If you don't know jquery already, it's a library for manipulating DOM and making ajax requests from a web browser. Take a quick look." -->
+
+To create a new promise, you call the `new RSVP.Promise(f)` constructor with a function `f`.
+`f` takes a function `resolve` as an argument, and should (at some point in the future) call `resolve` with the value that the promise
+resolves to.
+
+Here is our example:
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
@@ -353,6 +432,22 @@ var server = {
 
 var geologistsPromise = server.getGeologists();
 ```
+
+The getGeologists function returns a new promise right away, and kicks off an ajax
+request for the array of geologists.  The promise remains pending for as long at it takes
+for jquery to get back to us and call the `done` handler.  Once the server returns the
+array of geologists, our code finally calls `resolve`.
+
+<!-- @end -->
+
+<!-- @code, "base" : "mock-volcano-server" -->
+
+Using setTimeout, create a promise that returns the value 'Hello' after 3 seconds.
+
+```javascript
+var helloPromise = ....;
+```
+
 <!-- @end -->
 
 <!-- @section -->
