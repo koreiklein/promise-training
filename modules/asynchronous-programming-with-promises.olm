@@ -224,23 +224,15 @@ How many promises are created by the above code snippet?
 
 <!-- @end -->
 
-If you look at the timeline for the `messagePromise`, you'll notice that it only requests the current
-time **after** the server has responded with the volcano.  But that's not at all necessary,
-we could instead build a messagePromise that requests the current time **before** the server responds with the volcano and
+If you look at the timeline for the `messagePromise`, you'll notice that it requests the current
+time only **after** the server has responded with the volcano.  But there's no reason the client can't request
+the current time earlier.
+We could instead build a messagePromise that requests the current time **before** the server responds with the volcano and
 prints out our message after **BOTH** the current time promise and the volcano promise have resolved.
 
 If we built the messagePromise that way, it's timeline would look more like this:
 
 ![](https://s3.amazonaws.com/outlearn-public/OWASP-Module-1/promises-images/chaining-parallel.svg)
-
-As you can see in the above diagram,
-
-- the client requests the volcano
-- immediately afterwards the client requests the current time
-- the client creates the `messagePromise`.  None of the promises are yet resolved.
-- the client waits for both promises to resolve
-- after both promises have resolved, the client builds the message.
-
 
 <!-- @code, "base" : "mock-volcano-server" -->
 
