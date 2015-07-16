@@ -150,7 +150,7 @@ but instead of resolving to a volcano, it resolves to a latitude and a longitude
 `.then` takes as its argument a function that will transform a volcano into coordinates
 and returns a promise for the coordinates.
 
-<!-- @task, "hasDeliverable" : true, "text" : "Enter the above code in main.js and run it. What is the longitude of the volcano?" -->
+<!-- @task, "hasDeliverable" : true, "text" : "Run the code snippet above. What is the longitude of the volcano?" -->
 
 <!-- @task, "hasDeliverable" : true, "text": "What does the promise x resolve to? Why?" -->
 
