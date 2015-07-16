@@ -443,16 +443,16 @@ var messagePromise = ....;
 
 <!-- @section -->
 
-# First things last: Creating promises from scratch
+# First things Last: Creating promises from scratch
 
 <!-- @multipleChoice -->
 
-Which of the following things has been conspicuously absent from this module on promises?
+Which of the following topics has been conspicuously absent from this module on promises?
 
 - [ ] How to build new promises from old ones.
 - [ ] How to create a new promise out of many existing promises.
-- [ ] How to to control the order in which resources are requested from the server.
 - [X] How you would create a starting promise in the first place.
+- [ ] How to to control the order in which resources are requested from the server.
 
 <!-- @end -->
 
