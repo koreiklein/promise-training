@@ -31,7 +31,7 @@
 
       "contentType" : "outlearn/code-environment",
       "language" : "javascript",
-      "dockerfile" : "code/Dockerfile",
+      "dockerfile" : "code/Dockerfile"
     }
   ]
 }
