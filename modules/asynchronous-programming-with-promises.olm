@@ -141,11 +141,14 @@ var x = coordinatesPromise.then(function(coordinates) {
 
 ### Explanation:
 
-Line 2 creates the volcano promise we start with.  It fires off a request for the volcano to the server to,
+Line 2 creates the volcano promise we start with.  It fires off a request to the server for the volcano
 and immediately returns with a promise that will eventually "resolve" to a volcano.
 
-On line 6 we use `.then` to create a promise for the coordinates of the volcano.  It's a lot like the volcano promise,
-but instead of resolving to a volcano, it resolves to a latitude and a longitude. `.then` takes as its argument a function that will transform a volcano into coordinates
+On line 6 we use `.then` to create a `coordinatesPromise` for the coordinates of the volcano.  `coordinatesPromise` is
+a lot like the `volcanoPromise`, but instead of resolving to a volcano,
+it resolves to a latitude and a longitude.
+
+Then `.then` on line 6 takes as its argument a function that will transform a volcano into coordinates
 and returns a promise for the coordinates.
 
 <!-- @task, "hasDeliverable" : true, "text" : "Run the code snippet above. What is the longitude of the volcano?" -->
