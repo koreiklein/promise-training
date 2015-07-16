@@ -107,7 +107,7 @@ Now you're ready to start working on problems.
 
 <!-- @section -->
 
-# Using `.then`
+# Using .then
 
 You can create one promise from another by calling `.then`
 
@@ -278,7 +278,7 @@ This diagram shows the various states the volcano promise moves through when you
 
 <!-- @section -->
 
-# Using `RSVP.Promise.all`
+# Using RSVP.Promise.all
 
 You can call `RSVP.Promise.all` to turn an array of promises into a promise for an array.
 
@@ -373,7 +373,7 @@ closestGeologistPromise.then(function(closestGeologist) {
 
 <!-- @section -->
 
-# Using `RSVP.hash`
+# Using RSVP.hash
 
 Just as `RSVP.Promise.all` turns an array of promises into a promise for an array,
 `RSVP.hash` turns a hash (a javascript object) of promises into a promise for a hash.
