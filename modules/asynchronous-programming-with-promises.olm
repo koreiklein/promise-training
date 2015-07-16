@@ -397,12 +397,17 @@ Just as `RSVP.Promise.all` turns an array of promises into a promise for an arra
 
 ```javascript
 
-var volcanoAndGeologistsPromise = RSVP.hash({
+// A hash, each of whose values is a promise.
+var hashOfPromises = {
   volcano: server.getVolcano(),
   geologists: server.getGeologists(),
-});
+};
+
+// RSVP.hash creates a promise that will resolve to a hash.
+var volcanoAndGeologistsPromise = RSVP.hash(hashOfPromises);
 
 volcanoAndGeologistsPromise.then(function(volcanoAndGeologists) {
+  // Here, volcanoAndGeologists is a hash with 'volcano' and 'geologist' as keys.
   var volcano = volcanoAndGeologists.volcano;
   var geologists = volcanoAndGeologists.geologists;
 
