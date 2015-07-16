@@ -154,7 +154,7 @@ and returns a promise for the coordinates.
 
 ## Timelines
 
-Lets say we have a `coordinatesPromise` created like so
+Let's say we have a `coordinatesPromise` created like so
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
@@ -184,9 +184,6 @@ Looking at the timeline, you'll see the order in which things happen:
 - The volcano data comes back from the server. The `volcanoPromise` resolves.
 - At this point, the function to extract latitude and longitude runs and returns the coordinates.
   The `coordinatesPromise` resolves.
-
-The function passed into `volcanoPromise.then` will only run once the server gets back to us and
-the promise has resolved.
 
 # Chaining `.then`
 
