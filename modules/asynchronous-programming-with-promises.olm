@@ -179,7 +179,7 @@ var messagePromise = server.getVolcano().then(function(volcano) {
 
 > **NOTE**: `server.getCurrentTime()` returns a promise for the current time.
 
-We get a promise with a timeline that will look something like this:
+we get a promise with a timeline that will look something like this:
 
 @asset, "contentType" : "outlearn/image", "location" : "images/chaining-sequential.svg" -->
 
@@ -217,7 +217,7 @@ var messagePromise = ....;
 ```
 <!-- @end -->
 
-## Promise reuse
+## Promise Reuse
 
 No matter how many times you call `.then` on a promise, the promise will only fetch data from the server once.
 
@@ -227,10 +227,13 @@ For example:
 ```javascript
 var volcanoPromise = server.getVolcano();
 
+// Call volcanoPromise.then once here.
 var latitudePromise = volcanoPromise.then(function(volcano) {
   return volcano.latitude;
 });
 
+// Call volcanoPromise.then again here.  It should produce no new requests
+// to the server.
 var longitudePromise = volcanoPromise.then(function(volcano) {
   return volcano.longitude;
 });
@@ -262,7 +265,7 @@ Which of the following timelines should the above code have ?
 
 Over the course of it's lifetime, a promise goes through the following stages:
 
-- *nonexistant*  Before you create the promise in the first place, it doesn't exist.
+- *nonexistent*  Before you create the promise in the first place, it doesn't exist.
 - *pending*  Once the promise has been created,
   it exists in memory, and your code can interact with it (e.g. by calling `.then`),
   but won't have the data it's waiting for. We call this state the *pending* state.
@@ -277,7 +280,7 @@ This diagram shows the various states the volcano promise moves through when you
 
 # Using `RSVP.Promise.all`
 
-`RSVP.Promise.all` is a function that will turn an array of promises into a promise for an array.
+You can call `RSVP.Promise.all` to turn an array of promises into a promise for an array.
 
 Here's an example:
 
@@ -289,6 +292,10 @@ var geologistsPromise = server.getGeologists();
 
 var arrayOfPromises = [ volcanoPromise, currentTimePromise, geologistsPromise ];
 
+
+// arrayOfPromises.then will not work, since arrays do not have a .then method.
+
+// Convert array of promises into a promise for an array.
 var promiseForArray = RSVP.Promise.all(arrayOfPromises);
 
 promiseForArray.then(function(array) {
