@@ -145,9 +145,7 @@ Line 2 creates the volcano promise we start with.  It fires off a request for th
 and immediately returns with a promise that will eventually "resolve" to a volcano.
 
 On line 6 we use `.then` to create a promise for the coordinates of the volcano.  It's a lot like the volcano promise,
-but instead of resolving to a volcano, it resolves to a latitude and a longitude.
-
-`.then` takes as its argument a function that will transform a volcano into coordinates
+but instead of resolving to a volcano, it resolves to a latitude and a longitude. `.then` takes as its argument a function that will transform a volcano into coordinates
 and returns a promise for the coordinates.
 
 <!-- @task, "hasDeliverable" : true, "text" : "Run the code snippet above. What is the longitude of the volcano?" -->
@@ -176,6 +174,8 @@ use a timeline:
 
 @asset, "contentType" : "outlearn/image", "location" : "images/simple-timeline.svg" -->
 
+![](file://Users/koreiklein/git/promise-training/images/simple-timeline.svg)
+
 # TODO(KK): Explain how to read this timeline.
 
 The function passed into `volcanoPromise.then` will only run once the server gets back to us and
@@ -185,7 +185,7 @@ the promise has resolved.
 
 So far, the functions we've been passing to `.then` return ordinary javascript objects.
 If instead, we call `.then` with a function that returns another promise, the promise returned
-by `.then` will resolve the the data from the latter promise.
+by `.then` will resolve with the data from the latter promise.
 
 For example if we write:
 
