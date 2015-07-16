@@ -179,14 +179,18 @@ use a timeline:
 
 Looking at the timeline, you'll see the order in which things happen:
 
-- First we make a call to `server.getVolcano()` creating the `volcanoPromise` object.
-  This sends a request for the volcano data to the server.
+- First we make a call to `server.getVolcano()`.
+  This call sends a request for the volcano data to the server and creates the `volcanoPromise` object.
 - Immediately afterward, we create the `coordinatesPromise`.  The function to extract the
   latitude and longitude from the volcano is created here, but it isn't run.
 - For the next long while (the green bar), we sit around waiting and doing nothing while the request makes its way to the server and back.
+  During this time, the `volcanoPromise` and `coordinatesPromise` are said to be in a *pending* state.
+  A *pending* promise is a promise that has been created, but does not yet have the data it's waiting for.
 - The volcano data comes back from the server. The `volcanoPromise` resolves.
-- At this point, the function to extract latitude and longitude runs and returns the coordinates.
-  The `coordinatesPromise` resolves.
+  Now the `volcanoPromise` is said to be *fulfilled*.
+  A *fulfilled* promise is a promise that has received the data it's waiting for.
+- Immediately afterward, the function to extract latitude and longitude runs and returns the coordinates.
+  The `coordinatesPromise` resolves.  Now the `coordinatesPromise` is fulfilled as well.
 
 # Chaining `.then`
 
@@ -288,23 +292,6 @@ Which of the following timelines should the above code have ?
 - [ ] [](Request twice)
 
 <!-- @end -->
-
-<!-- @section -->
-
-# The Lifetime of a Promise
-
-Over the course of it's lifetime, a promise goes through the following stages:
-
-- *nonexistent*  Before you create the promise in the first place, it doesn't exist.
-- *pending*  Once the promise has been created,
-  it exists in memory, and your code can interact with it (e.g. by calling `.then`),
-  but won't have the data it's waiting for. We call this state the *pending* state.
-- *fulfilled*  After the data for a promise arrives, the promise is *fulfilled*.
-
-This diagram shows the various states the volcano promise moves through when you run
-`var volcanoPromise = server.getVolcano();`
-
-@asset, "contentType" : "outlearn/image", "location" : "images/promise-lifetime.svg" -->
 
 <!-- @section -->
 
