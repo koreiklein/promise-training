@@ -227,16 +227,16 @@ How many promises are created by the above code snippet?
 If you look at the timeline for the `messagePromise`, you'll notice that it requests the current
 time only **after** the server has responded with the volcano.  But there's no reason the client can't request
 the current time earlier.
-We could instead build a messagePromise that requests the current time **before** the server responds with the volcano and
+We could instead build a `messagePromise` that requests the current time **before** the server responds with the volcano and
 prints out our message after **BOTH** the current time promise and the volcano promise have resolved.
 
-If we built the messagePromise that way, it's timeline would look more like this:
+If we built the `messagePromise` that way, it's timeline would look more like this:
 
 ![](https://s3.amazonaws.com/outlearn-public/OWASP-Module-1/promises-images/chaining-parallel.svg)
 
 <!-- @code, "base" : "mock-volcano-server" -->
 
-Write a messagePromise that will execute with a timeline like the one above.
+Write a `messagePromise` that will execute with a timeline like the one above.
 
 ```javascript
 
@@ -277,6 +277,8 @@ coordinatesPromise.then(function(coordinates) {
 });
 ```
 
+Though the `volcanoPromise` is used to calculate the `latitudePromise` and the `longitudePromise`,
+the client will only make one request to the server for the volcano's data.
 
 <!-- @multipleChoice -->
 
