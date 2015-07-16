@@ -6,6 +6,8 @@
     {
       "name" : "comprehensive-promises",
       "title" : "A Comprehensive introduction to Promises",
+      "privacy" : "private",
+      "description" : "Everything you need to know about working with promises at Outlearn",
       "pages" : [
         { "module" : "asynchronous-programming-with-promises" },
         { "page" : "tmp/task-js-and-es6.md" },
