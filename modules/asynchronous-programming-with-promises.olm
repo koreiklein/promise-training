@@ -141,13 +141,13 @@ var x = coordinatesPromise.then(function(coordinates) {
 
 ### Explanation:
 
-Line 2 creates the volcano promise we start with.  It doesn't actually get the volcano, just a promise
-that will eventually "resolve" to a volcano.
+Line 2 creates the volcano promise we start with.  It fires off a request for the volcano to the server to,
+and immediately returns with a promise that will eventually "resolve" to a volcano.
 
 On line 6 we use `.then` to create a promise for the coordinates of the volcano.  It's a lot like the volcano promise,
 but instead of resolving to a volcano, it resolves to a latitude and a longitude.
 
-`.then` takes as its argument a function that will transform a volcano into its coordinates
+`.then` takes as its argument a function that will transform a volcano into coordinates
 and returns a promise for the coordinates.
 
 <!-- @task, "hasDeliverable" : true, "text" : "Enter the above code in main.js and run it. What is the longitude of the volcano?" -->
@@ -164,8 +164,8 @@ the promise has resolved.
 # Chaining `.then`
 
 So far, the functions we've been passing to `.then` return ordinary javascript objects.
-If instead we were to return another promise, `.then` would return a promise that waits for
-BOTH promises to resolve.
+If instead, we call `.then` with a function that returns another promise, the promise returned
+by `.then` will wait for both of its component promises to resolve.
 
 For example if we write:
 
@@ -177,11 +177,25 @@ var messagePromise = server.getVolcano().then(function(volcano) {
 });
 ```
 
+  **NOTE**: `server.getCurrentTime()` returns a promise for the current time.
+
 We get a promise with a timeline that will look something like this:
 
 @asset, "contentType" : "outlearn/image", "location" : "images/chaining-sequential.svg" -->
 
-__**NOTE**: `server.getCurrentTime()` returns a promise for the current time.__
+<!-- @multipleChoice -->
+
+How many promises are created by the above code snippet?
+
+- [ ] 1
+- [ ] 2
+- [ ] 3
+- [X] 4
+- [ ] 5
+
+`.getVolcano`, `.getCurrentTime` and `.then` each return a promise.
+
+<!-- @end -->
 
 If you look at the timeline for the `messagePromise`, you'll notice that it only requests the current
 time **after** the server has responded with the volcano.  But that's not at all necessary,
@@ -455,3 +469,10 @@ var helloPromise = ....;
 # Error Handling
 
 TODO(KK): Write this section.
+
+
+<!-- @section -->
+
+# Summary
+
+TODO(KK): Summarize the entirely of this module in a super succinct way.
