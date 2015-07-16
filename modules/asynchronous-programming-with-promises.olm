@@ -292,10 +292,9 @@ var geologistsPromise = server.getGeologists();
 
 var arrayOfPromises = [ volcanoPromise, currentTimePromise, geologistsPromise ];
 
-
 // arrayOfPromises.then will not work, since arrays do not have a .then method.
 
-// Convert array of promises into a promise for an array.
+// Convert the array of promises into a promise for an array.
 var promiseForArray = RSVP.Promise.all(arrayOfPromises);
 
 promiseForArray.then(function(array) {
@@ -379,6 +378,22 @@ closestGeologistPromise.then(function(closestGeologist) {
 Just as `RSVP.Promise.all` turns an array of promises into a promise for an array,
 `RSVP.hash` turns a hash (a javascript object) of promises into a promise for a hash.
 
+```javascript
+
+var volcanoAndGeologistsPromise = RSVP.hash({
+  volcano: server.getVolcano(),
+  geologists: server.getGeologists(),
+});
+
+volcanoAndGeologistsPromise.then(function(volcanoAndGeologists) {
+  var volcano = volcanoAndGeologists.volcano;
+  var geologists = volcanoAndGeologists.geologists;
+
+  console.log(volcano);
+  console.log(geologists);
+});
+
+```
 
 Remember the messagePromise from above? It looked like this:
 
@@ -397,7 +412,7 @@ once both promises had resolved.
 
 <!-- @code, "base" : "mock-volcano-server" -->
 
-Rewrite the messagePromise using RSVP.hash to make its requests in parallel.
+Using RSVP.hash, rewrite the messagePromise to make its requests in parallel.
 
 ```javascript
 var messagePromise = ....;
