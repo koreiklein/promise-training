@@ -290,10 +290,8 @@ the client will only make one request to the server for the volcano's data.
 
 Which of the following timelines should the above code have ?
 
-- [X] |------------------------ Waiting for Volcano ------------------|--get longitude --| Create coordinates
-      |------------------------ Waiting for Volcano ------------------|--get latitude  --|
-- [ ] |------------------------ Waiting for Volcano ------------------|--get latitude  --| Create coordinates
-                                                                      |--get latitude  --|
+r [X] ![](request once)
+- [ ] ![](request twice)
 
 <!-- @end -->
 
