@@ -114,6 +114,7 @@ You can create one promise from another by calling `.then`
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
 
+console.log('volcanoPromise is:');
 var volcanoPromise = server.getVolcano();
 
 console.log(volcanoPromise);
@@ -125,6 +126,7 @@ var coordinatesPromise = volcanoPromise.then(function(volcano) {
   };
 });
 
+console.log('coordinatesPromise is:');
 console.log(coordinatesPromise);
 
 volcanoPromise.then(function(volcano) {
@@ -288,8 +290,10 @@ the client will only make one request to the server for the volcano's data.
 
 Which of the following timelines should the above code have ?
 
-- [X] [](Request once)
-- [ ] [](Request twice)
+- [X] |------------------------ Waiting for Volcano ------------------|--get longitude --| Create coordinates
+      |------------------------ Waiting for Volcano ------------------|--get latitude  --|
+- [ ] |------------------------ Waiting for Volcano ------------------|--get latitude  --| Create coordinates
+                                                                      |--get latitude  --|
 
 <!-- @end -->
 
@@ -491,7 +495,7 @@ var server = {
 var geologistsPromise = server.getGeologists();
 ```
 
-The getGeologists function returns a new promise right away, and kicks off an ajax
+The `getGeologists` function returns a new promise right away, and kicks off an ajax
 request for the array of geologists.  The promise remains pending for as long at it takes
 for jquery to get back to us and call the `done` handler.  Once the server returns the
 array of geologists, our code finally calls `resolve`.

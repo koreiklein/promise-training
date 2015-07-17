@@ -1,0 +1,14 @@
+{
+  "name": "mock-volcano-server",
+  "version": "1.0.0",
+  "description": "For mocking out the volcano server of the Outlearn module on asynchronous programming with promises.",
+  "main": "mock-volcano-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rsvp": "^3.0.18"
+  }
+}
