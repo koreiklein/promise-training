@@ -64,9 +64,9 @@ var server = {
 
   getGeologists: function() {
     var trigger = promiseController.createPromiseTrigger([
-      { name: "Moe", latitude: 40.75, longitude: 14.4863 },
-      { name: "Larry", latitude: 40.76, longitude: 14.4868 },
-      { name: "Curly", latitude: 40.7532, longitude: 14.4857 }
+      { name: "Moe" },
+      { name: "Larry" },
+      { name: "Curly" }
     ]);
 
     trigger.resolveIn(1100);
@@ -79,15 +79,27 @@ var server = {
     var data = null;
     switch (geologist.name) {
       case 'Moe':
-        data = { temperature: 70 };
+        data = [
+          { temperature: 70, latitude: 40.75, longitude: 14.4833 },
+          { temperature: 70, latitude: 40.77, longitude: 14.4872 },
+        ];
         time = 444;
         break;
       case 'Larry':
-        data = { temperature: 78 };
+        data = [
+          { temperature: 70, latitude: 40.74, longitude: 14.4828 },
+          { temperature: 70, latitude: 40.73, longitude: 14.4800 },
+          { temperature: 70, latitude: 40.74, longitude: 14.4814 },
+        ];
         time = 751;
         break;
       case 'Curly':
-        data = { temperature: 96 };
+        data = [
+          { temperature: 70, latitude: 40.75, longitude: 14.4873 },
+          { temperature: 70, latitude: 40.75, longitude: 14.4664 },
+          { temperature: 70, latitude: 40.74, longitude: 14.4897 },
+          { temperature: 70, latitude: 40.78, longitude: 14.4827 },
+        ];
         time = 272;
         break;
     };
