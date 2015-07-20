@@ -114,6 +114,7 @@ You can create one promise from another by calling `.then`
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
+var server = require('./volcano-server');
 
 console.log('volcanoPromise is:');
 var volcanoPromise = server.getVolcano();
@@ -164,6 +165,7 @@ Let's say we have a `coordinatesPromise` created like so
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
+var server = require('./volcano-server');
 
 var volcanoPromise = server.getVolcano();
 
@@ -246,6 +248,7 @@ If we built the `messagePromise` that way, it's timeline would look more like th
 Write a `messagePromise` that will execute with a timeline like the one above.
 
 ```javascript
+var server = require('./volcano-server');
 
 var messagePromise = ....;
 
@@ -260,6 +263,8 @@ For example:
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
+var server = require('./volcano-server');
+
 var volcanoPromise = server.getVolcano();
 
 // Call volcanoPromise.then once here.
@@ -306,6 +311,8 @@ Here's an example:
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
+var server = require('./volcano-server');
+
 var volcanoPromise = server.getVolcano();
 var currentTimePromise = server.getCurrentTime();
 var geologistsPromise = server.getGeologists();
@@ -347,6 +354,8 @@ Our server has a function that returns a promise for the array of all our geolog
 
 <!-- @code, "base" : "mock-volcano-server" -->
 ```javascript
+var server = require('./volcano-server');
+
 var geologistsPromise = server.getGeologists();
 
 geologistsPromise.then(function(geologists) {
@@ -363,6 +372,8 @@ geologistsPromise.then(function(geologists) {
 Create a promise for the first geologist in the list.
 
 ```javascript
+var server = require('./volcano-server');
+
 var firstGeologistPromise =  ....;
 
 firstGeologistPromise.then(function(geologist) {
@@ -383,6 +394,8 @@ var readingsPromise = server.getReadings(geologist);
 Create a promise that resolves to whatever geologist has taken readings that are closest to the volcano.
 
 ```javascript
+var server = require('./volcano-server');
+
 var closestGeologistPromise = ..... Your code here ....
 
 closestGeologistPromise.then(function(closestGeologist) {
@@ -440,6 +453,8 @@ once both promises had resolved.
 Using RSVP.hash, rewrite the messagePromise to make its requests in parallel.
 
 ```javascript
+var server = require('./volcano-server');
+
 var messagePromise = ....;
 ```
 <!-- @end -->

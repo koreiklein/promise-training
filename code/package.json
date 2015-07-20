@@ -1,5 +1,5 @@
 {
-  "name": "mock-volcano-server",
+  "name": "volcano-server",
   "version": "1.0.0",
   "description": "For mocking out the volcano server of the Outlearn module on asynchronous programming with promises.",
   "main": "mock-volcano-server.js",
