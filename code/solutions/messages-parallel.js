@@ -1,4 +1,6 @@
 
+var server = require('/mock-volcano-server');
+
 // The message promise that makes requests in parallel.
 var currentTimePromise = server.getCurrentTime();
 var messagePromise = server.getVolcano().then(function(volcano) {
@@ -11,4 +13,3 @@ messagePromise.then(function(message) {
   console.log('Message is:');
   console.log(message);
 });
-

@@ -1,4 +1,6 @@
 
+var server = require('/mock-volcano-server');
+
 var firstGeologistPromise = server.getGeologists().then(function(geologists) {
   return geologists[0];
 });
@@ -6,4 +8,3 @@ var firstGeologistPromise = server.getGeologists().then(function(geologists) {
 firstGeologistPromise.then(function(geologist) {
   console.log("The first geologist is " + geologist.name);
 });
-

@@ -1,4 +1,6 @@
 
+var server = require('/mock-volcano-server');
+
 function dist(volcano, readings) {
   var min = null;
   for (var i = 0; i < readings.length; ++i) {

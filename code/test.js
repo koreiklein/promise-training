@@ -25,6 +25,3 @@ var x = coordinatesPromise.then(function(coordinates) {
   console.log("Got the coordinates");
   console.log(coordinates);
 });
-
-
-
