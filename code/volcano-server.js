@@ -20,6 +20,10 @@ var promiseController = {
         }, ms);
       },
 
+      resolveNow: function() {
+        this.resolve();
+      },
+
       resolve: null,
     };
 
