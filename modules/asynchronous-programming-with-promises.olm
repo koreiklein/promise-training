@@ -296,7 +296,7 @@ the client will only make one request to the server for the volcano's data.
 
 Which of the following timelines should the above code have ?
 
-r [X] ![](request once)
+- [X] ![](request once)
 - [ ] ![](request twice)
 
 <!-- @end -->
